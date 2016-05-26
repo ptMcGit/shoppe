@@ -55,6 +55,10 @@ end
 
 
 class UserTests < Minitest::Test
+
+    focus
+
+
   def test_have_attributes
     user = User.new 10, "Bilbo Baggins", "Bag End"
     assert_equal 10, user.id
