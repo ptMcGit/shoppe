@@ -1,0 +1,26 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Frodo Baggins",
+            "address": "Bag End"
+        },
+        {
+            "id": 2,
+            "name": "Samwise Gamgee",
+            "address": "The Shire"
+        },
+        {
+            "id": 3,
+            "name": "Pippin Took",
+            "address": "Elsewhere in The Shire"
+        },
+        {
+            "id": 4,
+            "name": "Merry Brandybuck",
+            "address": "Also The Shire",
+            "favorite_meal": "Second breakfast"
+        }
+    ],
+    "items": []
+}

@@ -1,0 +1,30 @@
+{
+    "users": [
+        {
+            "id": 52,
+            "name": "Rum Tum Tugger"
+        },
+        {
+            "id": 117,
+            "name": "Mr. Mistoffelees"
+        },
+        {
+            "id": 103,
+            "name": "Skimbleshanks"
+        }
+    ],
+    "items": [
+        {
+            "id": 1,
+            "name": "A Bit of String",
+            "category": "Household Goods",
+            "price": 2.99
+        },
+        {
+            "id": 2,
+            "price": 20,
+            "name": "Catnip",
+            "category": "Pharmaceuticals"
+        }
+    ]
+}

@@ -1,0 +1,276 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Heavy Duty Bronze Pants",
+      "price": 25.53,
+      "category": "Health & Electronics"
+    },
+    {
+      "id": 2,
+      "name": "Synergistic Copper Hat",
+      "price": 70.57,
+      "category": "Kids & Tools"
+    },
+    {
+      "id": 3,
+      "name": "Lightweight Iron Bottle",
+      "price": 64.29,
+      "category": "Computers & Jewelery"
+    },
+    {
+      "id": 4,
+      "name": "Aerodynamic Plastic Bench",
+      "price": 21.25,
+      "category": "Tools"
+    },
+    {
+      "id": 5,
+      "name": "Heavy Duty Paper Table",
+      "price": 51.05,
+      "category": "Games"
+    },
+    {
+      "id": 6,
+      "name": "Sleek Linen Watch",
+      "price": 91.29,
+      "category": "Books & Jewelery"
+    },
+    {
+      "id": 7,
+      "name": "Enormous Concrete Wallet",
+      "price": 93.38,
+      "category": "Computers & Garden"
+    },
+    {
+      "id": 8,
+      "name": "Ergonomic Rubber Lamp",
+      "price": 72.59,
+      "category": "Movies & Health"
+    },
+    {
+      "id": 9,
+      "name": "Sleek Bronze Wallet",
+      "price": 56.12,
+      "category": "Kids"
+    },
+    {
+      "id": 10,
+      "name": "Intelligent Silk Shoes",
+      "price": 15.59,
+      "category": "Music"
+    },
+    {
+      "id": 11,
+      "name": "Lightweight Granite Clock",
+      "price": 78.96,
+      "category": "Tools"
+    },
+    {
+      "id": 12,
+      "name": "Awesome Wooden Gloves",
+      "price": 94.86,
+      "category": "Garden & Music"
+    },
+    {
+      "id": 13,
+      "name": "Synergistic Wool Knife",
+      "price": 60.84,
+      "category": "Beauty"
+    },
+    {
+      "id": 14,
+      "name": "Practical Linen Car",
+      "price": 64.68,
+      "category": "Books & Industrial"
+    },
+    {
+      "id": 15,
+      "name": "Lightweight Steel Chair",
+      "price": 31.64,
+      "category": "Automotive & Sports"
+    },
+    {
+      "id": 16,
+      "name": "Fantastic Wool Computer",
+      "price": 71.23,
+      "category": "Books & Outdoors"
+    },
+    {
+      "id": 17,
+      "name": "Gorgeous Iron Keyboard",
+      "price": 87.65,
+      "category": "Health & Clothing"
+    },
+    {
+      "id": 18,
+      "name": "Enormous Iron Gloves",
+      "price": 94.43,
+      "category": "Tools & Computers"
+    },
+    {
+      "id": 19,
+      "name": "Durable Iron Bag",
+      "price": 19.07,
+      "category": "Jewelery"
+    },
+    {
+      "id": 20,
+      "name": "Rustic Marble Keyboard",
+      "price": 89.04,
+      "category": "Music & Automotive"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Candida Legros IV",
+      "address": "41206 Henri Ferry"
+    },
+    {
+      "id": 2,
+      "name": "Harry Effertz II",
+      "address": "8860 Grady Isle"
+    },
+    {
+      "id": 3,
+      "name": "Ms. Madeline Cremin",
+      "address": "156 Christelle Branch"
+    },
+    {
+      "id": 4,
+      "name": "Samir Satterfield",
+      "address": "7348 Schinner Bridge"
+    },
+    {
+      "id": 5,
+      "name": "Miss Modesta Hudson",
+      "address": "1674 Ramiro Isle"
+    },
+    {
+      "id": 6,
+      "name": "Hailee VonRueden",
+      "address": "147 Gaylord Dam"
+    },
+    {
+      "id": 7,
+      "name": "Lottie Cremin",
+      "address": "391 White Neck"
+    },
+    {
+      "id": 8,
+      "name": "Giuseppe McDermott",
+      "address": "40769 Garry Forges"
+    },
+    {
+      "id": 9,
+      "name": "Prince Botsford",
+      "address": "19282 Dovie Lights"
+    },
+    {
+      "id": 10,
+      "name": "Laila Dickens",
+      "address": "76609 Denesik Trafficway"
+    },
+    {
+      "id": 11,
+      "name": "Zack Powlowski",
+      "address": "679 Joshua Pines"
+    },
+    {
+      "id": 12,
+      "name": "Cindy Bechtelar",
+      "address": "355 Sterling Groves"
+    },
+    {
+      "id": 13,
+      "name": "Lauriane Champlin",
+      "address": "13014 Bartell Mountains"
+    },
+    {
+      "id": 14,
+      "name": "Mr. Larry Walker",
+      "address": "9907 Reichel Ways"
+    },
+    {
+      "id": 15,
+      "name": "Burdette Zemlak",
+      "address": "1964 Mackenzie Manors"
+    },
+    {
+      "id": 16,
+      "name": "Miss Maxwell Gaylord",
+      "address": "2031 Faustino Islands"
+    },
+    {
+      "id": 17,
+      "name": "Martina Davis",
+      "address": "76139 Braxton Manors"
+    },
+    {
+      "id": 18,
+      "name": "Willis Robel",
+      "address": "5611 Shanon Drive"
+    },
+    {
+      "id": 19,
+      "name": "Araceli Carter I",
+      "address": "488 Shields Village"
+    },
+    {
+      "id": 20,
+      "name": "Lorenz Rolfson",
+      "address": "5087 Bethany Path"
+    },
+    {
+      "id": 21,
+      "name": "Unique Ortiz",
+      "address": "374 Farrell Ford"
+    },
+    {
+      "id": 22,
+      "name": "Lemuel Pfannerstill",
+      "address": "47501 Ida Green"
+    },
+    {
+      "id": 23,
+      "name": "Gretchen Pfannerstill",
+      "address": "65434 Ratke Camp"
+    },
+    {
+      "id": 24,
+      "name": "Lola Fritsch",
+      "address": "630 Madeline Fields"
+    },
+    {
+      "id": 25,
+      "name": "Uriah Abernathy",
+      "address": "91592 Senger Corners"
+    },
+    {
+      "id": 26,
+      "name": "Loyce White",
+      "address": "3008 Farrell Ville"
+    },
+    {
+      "id": 27,
+      "name": "Deven Oberbrunner",
+      "address": "24316 Trantow Cape"
+    },
+    {
+      "id": 28,
+      "name": "Isabell Casper",
+      "address": "6282 Kassandra Turnpike"
+    },
+    {
+      "id": 29,
+      "name": "Waino Windler",
+      "address": "72536 Brisa Neck"
+    },
+    {
+      "id": 30,
+      "name": "Milford Blanda V",
+      "address": "3436 Elisa Key"
+    }
+  ]
+}

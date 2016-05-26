@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2016-05-23",
+    "user_id": 19,
+    "item_id": 6,
+    "quantity": 6
+  },
+  {
+    "timestamp": "2016-05-06",
+    "user_id": 29,
+    "item_id": 17,
+    "quantity": 2
+  },
+  {
+    "timestamp": "2016-04-29",
+    "user_id": 14,
+    "item_id": 1,
+    "quantity": 8
+  },
+  {
+    "timestamp": "2016-05-17",
+    "user_id": 11,
+    "item_id": 5,
+    "quantity": 6
+  },
+  {
+    "timestamp": "2016-05-22",
+    "user_id": 10,
+    "item_id": 19,
+    "quantity": 6
+  }
+]
