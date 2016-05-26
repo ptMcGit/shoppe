@@ -56,8 +56,6 @@ end
 
 class UserTests < Minitest::Test
 
-    focus
-
 
   def test_have_attributes
     user = User.new 10, "Bilbo Baggins", "Bag End"
@@ -69,7 +67,11 @@ end
 
 
 class DataParserTests < Minitest::Test
+
+  focus
+
   def test_can_parse_hobbits
+
     p = DataParser.new file_path("hobbitses")
     assert p.path.end_with? "tests/hobbitses.json"
     assert_equal [], p.users
@@ -80,6 +82,7 @@ class DataParserTests < Minitest::Test
     p.parse!
 
     assert_equal 4, p.users.count
+    binding.pry
     assert p.users.sample.is_a? User
   end
 
