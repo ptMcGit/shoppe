@@ -51,6 +51,7 @@ class ItemTests < Minitest::Test
       Item.new 1, "Socks"
     end
   end
+
 end
 
 
@@ -68,7 +69,6 @@ end
 
 class DataParserTests < Minitest::Test
 
-  focus
 
   def test_can_parse_hobbits
 
@@ -82,11 +82,11 @@ class DataParserTests < Minitest::Test
     p.parse!
 
     assert_equal 4, p.users.count
-    binding.pry
     assert p.users.sample.is_a? User
   end
 
   def test_can_parse_kittens
+
     p = DataParser.new file_path("kittens")
 
     p.parse!
@@ -94,23 +94,43 @@ class DataParserTests < Minitest::Test
     assert_equal 3, p.users.count
     assert_equal 2, p.items.count
     assert p.items.sample.is_a? Item
+
   end
+
+  def test_items_can_be_unsorted
+    p = DataParser.new file_path("kittens")
+
+    p.parse!
+
+    binding.pry
+
+    assert_equal 2.99, p.items[0].price
+    assert_equal 1, p.items[0].id
+    assert_equal "A Bit of String", p.items[0].name
+    assert_equal "Household Goods", p.items[0].category
+
+  end
+    #assert_equal
+
+
+
+
 end
 
-
 class TransactionParserTests < Minitest::Test
+
   def test_can_parse_monday
     p = TransactionParser.new file_path("monday")
     p.parse!
 
-    assert_equal 5, p.transaction_count
+    assert_equal 5, p.transaction.count
   end
 
   def test_can_parse_tuesday
     p = TransactionParser.new file_path("tuesday")
     p.parse!
 
-    assert_equal 15, p.transaction_count
+    assert_equal 15, p.transaction.count
   end
 
   # Now it's your turn ... what other tests might be
