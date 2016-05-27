@@ -9,7 +9,7 @@ require "./item"
 require "./user"
 require "./data_parser"
 require "./transaction_parser"
-
+require "./data_parsed"
 
 class Minitest::Test
   # A little magic here, but this adds a `file_path` helper
@@ -71,7 +71,7 @@ class DataParserTests < Minitest::Test
   def test_can_parse_hobbits
 
     p = DataParser.new file_path("hobbitses")
-    assert p.path.end_with? "tests/hobbitses.json"
+     assert p.path.end_with? "tests/hobbitses.json"
     assert_equal [], p.users
 
     # recommendation: to parse the file, use something like
@@ -158,7 +158,6 @@ class TransactionParserTests < Minitest::Test
   def test_can_parse_tuesday
     p = TransactionParser.new file_path("tuesday")
     p.parse!
-
     assert_equal 15, p.transaction.count
   end
 
@@ -167,24 +166,37 @@ class TransactionParserTests < Minitest::Test
   # files or to write your own
 end
 
+class UserDataSetTests < Minitest::Test
+  def test_load_data
+    p = DataParser.new file_path("hobbitses")
+    p.parse!
+  end
+end
+
 class StatsTests < Minitest::Test
-  def test_get_username
-    #given a user's id get their name
-    p = DataParser.new file_path("hobbitses")
+  # def test_get_username
+  #   #given a user's id get their name
+  #   p = DataParser.new file_path("hobbitses")
+  #   p.parse!
+  #   #binding.pry
+  #   #p.parse!
 
-    p.parse!
+  #   d = UserDataSet.new p.users
 
-    assert_equal "3", p.get_uid("Pippin Took")
-  end
+  #   assert_equal "3", d.get_uid("Pippin Took")
+  # end
 
-  def test_get_uid
-    #given a user's name get their id
-    p = DataParser.new file_path("hobbitses")
+  # def test_get_uid
+  #   #given a user's name get their id
+  #   p = DataParser.new file_path("hobbitses")
 
-    p.parse!
 
-    assert_equal "Pippin Took", p.get_username(3)
-  end
+  #   p.parse!
+
+  #   d = UserStatsData.new p.users
+
+  #   assert_equal "Pippin Took", d.get_username(3)
+  # end
 
   def test_get_list_of_uids
   end
@@ -213,7 +225,6 @@ class StatsTests < Minitest::Test
   def test_highest_grossing_category
   end
 
-
   def test_count_user_transactions
   end
 
@@ -222,7 +233,4 @@ class StatsTests < Minitest::Test
 
   def test_get_total_revenue
   end
-
-
-
 end
