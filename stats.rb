@@ -10,8 +10,8 @@ require "./transaction_parser"
 
 
 class DataBase
-  def initialize name, data
-    @name = name
+  def initialize data
+    #@name = name
     @data = data
   end
 
@@ -23,15 +23,30 @@ end
 
 #user_d = UserData.new(DataParser.new
 
-data_sets = []
+
+
 user_files = [
   "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/kittens.json",
 "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/hobbitses.json"
 ]
 
+transaction_files = [
+  "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/monday.json",
+"/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/tuesday.json"
+]
+
+
+data_sets = []
+
 user_files.each do |file|
   p = DataParser.new file
   #binding.pry
+  p.parse!
+  data_sets.push p
+end
+
+transaction_files.each do |file|
+  p = TransactionParser.new file
   p.parse!
   data_sets.push p
 end
@@ -46,16 +61,14 @@ data_sets.each do |object|
       data_bases[i_var].add_data object.instance_variable_get(i_var)
     else
       # create db
-      data_bases[i_var] = DataBase.new i_var.to_s.gsub(/@/,""), object.instance_variable_get(i_var)
+      data_bases[i_var] = DataBase.new object.instance_variable_get(i_var)
+      #data_bases[i_var] = DataBase.new i_var.to_s.gsub(/@/,""), object.instance_variable_get(i_var)
 
     end
   end
 end
 
 binding.pry
-
-
-
 
 class Stats
 
