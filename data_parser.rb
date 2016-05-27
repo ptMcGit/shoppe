@@ -30,7 +30,9 @@ class DataParser
         h["name"],
         h["address"])
       )
+      #binding.pry
     end
+    #binding.pry
 
     @contents["items"].each do |item|
       h = {}
@@ -45,6 +47,32 @@ class DataParser
         h["category"])
       )
     end
+
+
   end
+
+#  def deduplicate!
+    # remove duplicate objects
+    #    binding.pry
+    #entries_to_delete = []
+#    count = @users.count
+#    binding.pry
+#    0.upto (@users.count - 1) do |index|
+#      @users.delete_if { |user2| (!user2.equal? @users[index]) && (user2.address == @users[index].address) && (user2.id == @users[index].id) && (user2.name == @users[index].name) }
+      #binding.pry
+
+
+ #     binding.pry
+      #binding.pry
+      #@users.delete duplicate_entries
+  #  end
+   # binding.pry
+#  end
+
+  def get_uid username
+    @users.select { |x| x.name == username }.map { |x| x.id }.join
+#    Binding.pry
+  end
+
 
 end

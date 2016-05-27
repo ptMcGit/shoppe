@@ -83,7 +83,7 @@ class DataParserTests < Minitest::Test
     assert p.users.sample.is_a? User
   end
 
-    def test_users_can_be_unsorted
+  def test_users_can_be_unsorted
 
     p = DataParser.new file_path("hobbitses")
 
@@ -92,9 +92,7 @@ class DataParserTests < Minitest::Test
     assert_equal 5, p.users[4].id
     assert_equal "Hulk Hogan", p.users[4].name
     assert_equal "The Squared Circle", p.users[4].address
-    end
-
-
+  end
 
   def test_can_parse_kittens
 
@@ -108,6 +106,32 @@ class DataParserTests < Minitest::Test
 
   end
 
+  # def test_no_duplicate_users
+
+  #   p = DataParser.new file_path("kittens")
+
+  #   p.parse!
+
+  #   p.users.push p.users[0].clone
+
+  #   p.deduplicate!
+  #   # 1 - manip
+  #   # 1 - confirm that there are duplicate users
+  #   # 2 - confirm that duplicate users have been removed
+
+  #   #p = Dataparser.new file_path("kittens")
+
+  #   #p.parse!
+
+  #   #@users.each do |user|
+  # end
+
+  def test_no_conflicting_ids
+
+    # no two instances of the same id pointing to different data
+  end
+
+
   def test_items_can_be_unsorted
     p = DataParser.new file_path("kittens")
 
@@ -119,11 +143,7 @@ class DataParserTests < Minitest::Test
     assert_equal "Household Goods", p.items[0].category
 
   end
-    #assert_equal
-
-
-
-
+  #assert_equal
 end
 
 class TransactionParserTests < Minitest::Test
@@ -145,4 +165,59 @@ class TransactionParserTests < Minitest::Test
   # Now it's your turn ... what other tests might be
   # helpful here? Feel free to re-use the existing test
   # files or to write your own
+end
+
+class StatsTests < Minitest::Test
+  def test_get_username
+    #given a user's id get their name
+    p = DataParser.new file_path("hobbitses")
+
+    p.parse!
+
+    assert_equal "3", p.get_uid("Pippin Took")
+  end
+
+  def test_get_uid
+    #given a user's name get their id
+  end
+
+  def test_get_list_of_uids
+  end
+
+  def test_get_price
+    #given an item id get the price
+  end
+
+  def test_get_list_of_item_ids
+  end
+
+  def test_get_item_name
+    #given an item id get the item name
+  end
+
+  def test_item_quantity_extended
+    #given an item get the amount extended by a quantity
+  end
+
+  def test_get_item_quantity_sold
+  end
+
+  def test_get_category_units_sold
+  end
+
+  def test_highest_grossing_category
+  end
+
+
+  def test_count_user_transactions
+  end
+
+  def test_sum_all_user_transactions
+  end
+
+  def test_get_total_revenue
+  end
+
+
+
 end
