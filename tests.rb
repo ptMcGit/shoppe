@@ -9,7 +9,6 @@ require "./item"
 require "./user"
 require "./data_parser"
 require "./transaction_parser"
-require "./data_parsed"
 
 class Minitest::Test
   # A little magic here, but this adds a `file_path` helper
@@ -170,6 +169,8 @@ class UserDataSetTests < Minitest::Test
   def test_load_data
     p = DataParser.new file_path("hobbitses")
     p.parse!
+    d = UserDataSet.new(p.users)
+    assert_equal 5, d.user_data.count
   end
 end
 
