@@ -2,9 +2,12 @@ require "json"
 
 class DataParser
 
-  attr_reader :path, :users, :items
+  attr_reader :path, :users, :items, :bob
+
+  #xBob = 42
 
   def initialize abs_filename
+#    binding.pry
     @contents = JSON.parse File.read abs_filename
     @path = abs_filename
     @users = []
@@ -43,7 +46,7 @@ class DataParser
 
     # we don't want to carry the original contents moving forward
 
-    @contents = []
+    remove_instance_variable(:@contents)
 
   end
 end
