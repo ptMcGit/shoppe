@@ -74,5 +74,8 @@ class DataParser
 #    Binding.pry
   end
 
+  def get_username uid
+    @users.select { |x| x.id == uid }.map { |x| x.name }.join
+  end
 
 end

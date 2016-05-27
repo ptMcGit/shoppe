@@ -179,6 +179,11 @@ class StatsTests < Minitest::Test
 
   def test_get_uid
     #given a user's name get their id
+    p = DataParser.new file_path("hobbitses")
+
+    p.parse!
+
+    assert_equal "Pippin Took", p.get_username(3)
   end
 
   def test_get_list_of_uids
