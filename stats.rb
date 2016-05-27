@@ -6,16 +6,68 @@ require "./user"
 require "./data_parser"
 require "./transaction"
 require "./transaction_parser"
-require "./data_parsed"
-require "./tests"
+#require "./tests"
 
 
-user_d = UserData.new(DataParser.new
+class DataBase
+  def initialize name, data
+    @name = name
+    @data = data
+  end
+
+  def add_data data
+    @data.concat data
+  end
+end
+
+
+#user_d = UserData.new(DataParser.new
+
+data_sets = []
+user_files = [
+  "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/kittens.json",
+"/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/hobbitses.json"
+]
+
+user_files.each do |file|
+  p = DataParser.new file
+  #binding.pry
+  p.parse!
+  data_sets.push p
+end
+
+data_bases = {}
+
+data_sets.each do |object|
+  object.instance_variables.each do |i_var|
+    #binding.pry
+    if data_bases.keys.include? i_var
+#      binding.pry# do not create a new db
+      data_bases[i_var].add_data object.instance_variable_get(i_var)
+    else
+      # create db
+      data_bases[i_var] = DataBase.new i_var.to_s.gsub(/@/,""), object.instance_variable_get(i_var)
+
+    end
+  end
+end
 
 binding.pry
 
+
+
+
 class Stats
 
+
+
+  def initialize data_array
+    @data = data_array
+  end
+  def merge_data! primary, secondary, *others
+    binding.pry
+  end
+end
 #  def deduplicate!
     # remove duplicate objects
     #    binding.pry
@@ -38,7 +90,3 @@ class Stats
 #  def user_who_make_most_orders
 #    binding.pry
 #  end
-
-
-
-end
