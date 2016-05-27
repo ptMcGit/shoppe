@@ -7,12 +7,11 @@ class DataParser
   #xBob = 42
 
   def initialize abs_filename
-#    binding.pry
     @contents = JSON.parse File.read abs_filename
-    @path = abs_filename
+    @path = [abs_filename]
     @users = []
     @items = []
-
+    binding.pry
   end
 
   def parse!
