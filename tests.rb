@@ -66,9 +66,7 @@ class UserTests < Minitest::Test
   end
 end
 
-
 class DataParserTests < Minitest::Test
-
 
   def test_can_parse_hobbits
 
@@ -81,9 +79,22 @@ class DataParserTests < Minitest::Test
     # JSON.parse(File.read path)
     p.parse!
 
-    assert_equal 4, p.users.count
+    assert_equal 5, p.users.count
     assert p.users.sample.is_a? User
   end
+
+    def test_users_can_be_unsorted
+
+    p = DataParser.new file_path("hobbitses")
+
+    p.parse!
+
+    assert_equal 5, p.users[4].id
+    assert_equal "Hulk Hogan", p.users[4].name
+    assert_equal "The Squared Circle", p.users[4].address
+    end
+
+
 
   def test_can_parse_kittens
 
@@ -101,8 +112,6 @@ class DataParserTests < Minitest::Test
     p = DataParser.new file_path("kittens")
 
     p.parse!
-
-    binding.pry
 
     assert_equal 2.99, p.items[0].price
     assert_equal 1, p.items[0].id

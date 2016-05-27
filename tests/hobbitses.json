@@ -20,6 +20,12 @@
             "name": "Merry Brandybuck",
             "address": "Also The Shire",
             "favorite_meal": "Second breakfast"
+        },
+        {
+            "address": "The Squared Circle",
+            "name": "Hulk Hogan",
+            "favorite_meal": "Vitamins",
+            "id": 5
         }
     ],
     "items": []

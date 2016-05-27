@@ -15,11 +15,22 @@ class DataParser
 
 
   def parse!
-    @contents["users"].each do |user|
-      @users.push(User.new user.values[0], user.values[1], user.values[2])
-    end
+    # @contents["users"].each do |user|
+    #   @users.push(User.new user.values[0], user.values[1], user.values[2])
+    # end
 
-    binding.pry
+    @contents["users"].each do |user|
+      h = {}
+      user.each do |key, value|
+        h[key] = value
+      end
+      @users.push(
+        User.new(
+        h["id"],
+        h["name"],
+        h["address"])
+      )
+    end
 
     @contents["items"].each do |item|
       h = {}
