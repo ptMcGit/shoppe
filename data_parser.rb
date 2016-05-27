@@ -38,6 +38,12 @@ class DataParser
         h["price"],
         h["category"])
       )
+
     end
+
+    # we don't want to carry the original contents moving forward
+
+    @contents = []
+
   end
 end
