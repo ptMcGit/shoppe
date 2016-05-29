@@ -1,7 +1,7 @@
 class UserDatabase < DataBase
   attr_reader :data
   def initialize data
-    @data = ensure_array(data)
+    super(data)
   end
 
   # def user_order_by_amount
