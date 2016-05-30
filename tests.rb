@@ -70,7 +70,7 @@ class DataParserTests < Minitest::Test
   def test_can_parse_hobbits
 
     p = DataParser.new file_path("hobbitses")
-     assert p.path.end_with? "tests/hobbitses.json"
+    assert p.path.end_with? "tests/hobbitses.json"
     assert_equal [], p.users
 
     # recommendation: to parse the file, use something like
@@ -135,7 +135,6 @@ class DataParserTests < Minitest::Test
     p = DataParser.new file_path("kittens")
 
     p.parse!
-
     assert_equal 2.99, p.items[0].price
     assert_equal 1, p.items[0].id
     assert_equal "A Bit of String", p.items[0].name
@@ -166,15 +165,28 @@ class TransactionParserTests < Minitest::Test
 end
 
 class UserDataSetTests < Minitest::Test
-  def test_load_data
-    p = DataParser.new file_path("hobbitses")
-    p.parse!
-    d = UserDataSet.new(p.users)
-    assert_equal 5, d.user_data.count
-  end
+  #def test_load_data
+  #  p = DataParser.new file_path("hobbitses")
+  #  p.parse!
+  #  d = UserDataSet.new(p.users)
+  #  assert_equal 5, d.user_data.count
+  #end
+
+  #def test_merge_data
+  #  p = DataParser.new file_path("hobbitses")
+  #  p.parse!
+  #  d = UserDataSet.new(p.users)
+  #  e = d.clone
+  #  f = d.clone
+
+   # d.merge_data e, f
+ # end
+
 end
 
 class StatsTests < Minitest::Test
+  def test_create_database
+    end
   # def test_get_username
   #   #given a user's id get their name
   #   p = DataParser.new file_path("hobbitses")
