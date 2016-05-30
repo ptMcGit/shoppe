@@ -101,7 +101,30 @@ class DataParser
     return tables
 
   end
+end
 
+class DataTable
+  def initialize name, data_parser_data
+    @data = []
+    data_parser_data.each do |o|
+      h = {}
+      h["key"] = o.object_id
+      o.instance_variables.each do |i|
+        h[i.to_s.gsub(/^@/,"")] = o.instance_variable_get(i)
+      end
+      @data.push h
+    end
+  end
+end
 
+class ItemTable < DataTable
+  def initialize name, data_parser_data
+    super(name, data_parser_data)
+  end
+end
 
+class UserTable < DataTable
+  def initialize name, data_parser_data
+    super(name, data_parser_data)
+  end
 end
