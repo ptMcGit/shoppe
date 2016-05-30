@@ -2,6 +2,10 @@ require "pry"
 
 require "./item"
 require "./user"
+require "./data_table"
+require "./user_table"
+require "./item_table"
+
 require "./data_parser"
 require "./transaction_id"
 require "./transaction_parser"
@@ -10,6 +14,7 @@ require "./database_mgr"
 require "./user_database"
 require "./item_database"
 require "./transaction_database"
+
 
 def is_a_valid_file? file
   File.readable?(file)
@@ -55,33 +60,42 @@ ARGV.each do |file|
     next
   end
   p.parse!
-  data_sets.push p
+  data_sets.push p.datafy
+  binding.pry
 end
 
 # gather up heterogenous data sets
 
 # create databases from datasets
 
+
+
 data_bases = {}
-data_sets.each do |object|
-  object.instance_variables.each do |i_var|
-    data = object.instance_variable_get(i_var)
-    if data_bases.keys.include? i_var
-      data_bases[i_var].add_data data
-    else
-      case i_var
-      when :@users
-        data_bases[i_var] = UserDatabase.new data
-      when :@items
-        data_bases[i_var] = ItemDatabase.new data
-      when :@transaction
-        data_bases[i_var] = TransactionDatabase.new data
-      else
-        data_bases[i_var] = DataBase.new data
-      end
-    end
-  end
-end
+
+
+exit
+
+
+
+# data_sets.each do |object|
+#   object.instance_variables.each do |i_var|
+#     data = object.instance_variable_get(i_var)
+#     if data_bases.keys.include? i_var
+#       data_bases[i_var].add_data data
+#     else
+#       case i_var
+#       when :@users
+#         data_bases[i_var] = UserDatabase.new data
+#       when :@items
+#         data_bases[i_var] = ItemDatabase.new data
+#       when :@transaction
+#         data_bases[i_var] = TransactionDatabase.new data
+#       else
+#         data_bases[i_var] = DataBase.new data
+#       end
+#     end
+#   end
+# end
 
 data_sets.clear
 mgr = DataBaseMgr.new data_bases

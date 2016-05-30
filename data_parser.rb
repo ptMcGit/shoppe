@@ -79,9 +79,29 @@ class DataParser
 
     end
 
+
     # we don't want to carry the original contents moving forward
 
     remove_instance_variable(:@contents)
 
   end
+
+  def datafy
+    tables = []
+
+    instance_variables.each do |i|
+      case i
+      when :@users
+        tables.push (UserTable.new(i, self.instance_variable_get(i)))
+        binding.pry
+      when :@items
+        tables.push (ItemTable.new(i, self.instance_variable_get(i)))
+      end
+    end
+    return tables
+
+  end
+
+
+
 end
