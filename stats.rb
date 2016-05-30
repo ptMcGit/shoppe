@@ -2,7 +2,6 @@ require "pry"
 
 require "./item"
 require "./user"
-require "./parser"
 require "./data_parser"
 require "./transaction_id"
 require "./transaction_parser"
@@ -86,55 +85,99 @@ end
 
 data_sets.clear
 mgr = DataBaseMgr.new data_bases
-db = mgr.current_db
 
-# access database
+# First question
 
-binding.pry
+## user table
+mgr.select_db :@users
+user_table = Hash[mgr.current_db.data.map { |h| [h.id, h.name] }]
 
-db = select_db data_bases[:@transaction]
-table = data_bases[:@transaction].user_order_by_amount
-
-binding.pry
-user_order_amount_descending = Hash.new(0)
-
-db.each do |transaction|
-  user_order_amount_descending[transaction["user_id"]] += transaction["quantity"]
+mgr.select_db :@transaction
+db = mgr.current_db.data
+u = Hash.new(0)
+db.each do |h|
+  u[h["user_id"]] += h["quantity"]
 end
 
-sorted = user_order_amount_descending.sort_by { |key, value| value }.reverse!
-#binding.pry
-#inter = user_order_amount_descending.sort { |key, value| key }.reverse!
-#binding.pry
-#data_bases[:@transaction].instance_variable_get(:@data)[0]
+answer = Hash[u.map { |k,v| [user_table[k], v] }].max_by { |n,q| q }
+puts "1. The user that made the most orders was #{answer[0]} with #{answer[1]} orders."
 
-table = []
-#count = 1
+# Second question
 
-sorted.each do | uid, total |
-  table << {"user_id"=>uid,"total"=>total}
-#  count += 1
+mgr.select_db :@items
+db = mgr.current_db.data
+item_id = db.select { |o| o.name == "Ergonomic Rubber Lamp" }[0].id
+
+h = Hash.new(0)
+mgr.select_db :@transaction
+db = mgr.current_db.data
+answer = db.select { |o| o["item_id"] == item_id }.map { |o| o["quantity"] }.reduce :+
+
+
+puts "2. We sold #{answer} Ergonomic Rubber Lamps."
+
+# Question 3
+
+mgr.select_db :@items
+db = mgr.current_db.data
+
+tools_cat = db.select { |o| o.category == "Tools" }.map { |o| o.id }
+tc_cat = db.select { |o| o.category == "Tools & Computers" }.map { |o| o.id }
+
+h = Hash.new(0)
+mgr.select_db :@transaction
+db = mgr.current_db.data
+
+answer = db.select { |o| tools_cat.include? o["item_id"] }.map {|o| o["quantity"] }.reduce :+
+
+answer2 = db.select { |o| tc_cat.include? o["item_id"] }.map {|o| o["quantity"] }.reduce :+
+
+puts "3. We sold #{answer} items from the Tools category and #{answer2} items from the Tools & Computers category"
+
+# Question 4
+
+mgr.select_db :@transaction
+db = mgr.current_db.data
+
+mgr.select_db :@items
+db2 = mgr.current_db.data
+
+answer = db.map { |h| [h["quantity"], db2.select { |r| r.id == h["item_id"]}.map {|i| i.price }] }.map {|y| y.flatten}.map {|j| j.reduce :* }.reduce :+
+answer_formatted = "$" + answer.round(2).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
+
+puts "4. Our total revenue was #{answer_formatted}."
+
+mgr.select_db :@transaction
+db = mgr.current_db.data
+
+mgr.select_db :@items
+db2 = mgr.current_db.data
+
+qty_price_cat = db.map { |h| [h["quantity"], db2.select { |r| r.id == h["item_id"]}.map {|i| [i.price, i.category]}] }.map { |x| x.flatten }
+
+h = Hash.new(0)
+
+qty_price_cat.each do |x,y,z|
+  h[z] += x * y
 end
-binding.pry
-answer = user_order_amount_descending.map { |key, value| {"user_id"=>key, "total"=>value}}
 
-inter = user_order_amount_descending.sort_by { |key, value| value }.reverse.map { |x,y| {x=>y}}
-highest = user_order_amount_descending.sort_by { |id, qty| qty }.reverse.first
+single_cat = h.max_by { |k,v| v}
 
-mgr.current_db.data.select { |o| o.id == 52 }[0].name
-mgr.current_db.data.max_by { |h| h["quantity"] }
-mgr.current_db.data.select { |o| o["item_id"] == 5 }.map { |o| o["quantity"] }.reduce :+
-  #json_parsed_file.pop json_parsed_file.count - 1
-binding.pry
-mgr.current_db.data.select { |o| o.category == "Household Goods" }.map { |o| o.id }
+answer_formatted = "$" + ('%.2f' % single_cat[1].round(2)).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
 
-mgr.current_db.data.map { |h| x.select { |r| r.id == h["item_id"] } }
+print "5a. The highest grossing single category was #{single_cat[0]} at #{answer_formatted}.\n"
 
-mgr.current_db.data.map { |h| [h["quantity"], x.select { |r| r.id == h["item_id"]}.map {|i| i.price }] }.map {|y| y.flatten}.map {|j| j.reduce :* }.reduce :+
+g = Hash.new(0)
 
-#   table = mgr.current_db.select ...
-#        table2 = mgr.current_db.select ...
+h.each do |k,v|
+  cats = k.gsub(/&/,"").split(" ")
+  cats.each do |cat|
+    g[cat] += v
+  end
+end
 
-# join table, "id", table2, "item_id",
-# extend table "id" "qty"
-# sum table "id"
+approx_cat = g.max_by { |k,v| v}
+
+answer_formatted = "$" + ('%.2f' % approx_cat[1].round(2)).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
+
+print "5b. Unmixing the categories suggests that #{approx_cat[0]} may be the highest grossing category at #{answer_formatted}.\n"

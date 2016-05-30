@@ -9,7 +9,6 @@ class DataBaseMgr
 
   def select_db database_name
     @current_db = @databases[database_name]
-    binding.pry
   end
 
 end
