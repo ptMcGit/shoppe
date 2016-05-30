@@ -31,6 +31,15 @@ class DataParser
                  "name"   => String,
                 "address" => String}],
       "items"=>[]
+      },
+      {
+        "items"=>[{ "id"            => Fixnum,
+                    "name"          => String,
+                    "category"      => String,
+                    "price"         => Float}],
+        "users"=>[{"id"         => Fixnum,
+                   "name"       => String,
+                   "address"    => String}],
       }
     ]
 
