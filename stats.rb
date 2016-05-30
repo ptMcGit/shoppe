@@ -2,6 +2,7 @@ require "pry"
 
 require "./item"
 require "./user"
+require "./parser"
 require "./data_parser"
 require "./transaction_id"
 require "./transaction_parser"
@@ -10,7 +11,7 @@ require "./database_mgr"
 require "./user_database"
 require "./item_database"
 require "./transaction_database"
-require "./parser"
+
 
 def object_to_prototype object
   return_h = {}
@@ -19,24 +20,27 @@ def object_to_prototype object
   binding.pry
 end
 
-#def is_transaction?
 
-def determine_parse_method abs_filename         # this is really hard to determine
-  contents = JSON.parse File.read abs_filename
-  binding.pry
-  if is_a_transaction_file? contents
-    return TransactionParser.new abs_filename
-    #binding.pry
-  #elsif is_a_data_file? contents
-  #  return DataParser.new contents
-  #elsif is_an_user_file?
-  #elsif is_an_items_file?
-  else
-    return DataParser.new abs_filename
-    #binding.pry
+def determine_parse_method abs_filename
+  h = JSON.parse File.read abs_filename
+
+  begin
+    if is_a_transaction_file? h
+      return TransactionParser
+    end
+  rescue NoMethodError => e
   end
-end
 
+  begin
+    if is_a_data_file? h
+      return DataParser
+    end
+  rescue NoMethodError => e
+  end
+
+  raise NotAValidFile
+
+end
 
 user_files = [
   "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/kittens.json",
@@ -51,39 +55,25 @@ transaction_files = [
 #exit
 
 data_sets = []
+parsers = []
 
-#(transaction_files + user_files).each do |file|
-#  data_sets.push(determine_parse_method(file).parse!)
-  #puts TransactionParser::bob
-  #p.push Parser.new file
-#end
 
-#STATS should be in a CLASS!
-#DataBaseMgr should be stats? Probably.
-
-#select_db :users    # should be this easy
-#=> modifies @selected_db
-
-#table = select_records_meeting_criteria
+(transaction_files + user_files).each do |file|
+  begin
+    p = determine_parse_method(file).new file
+  rescue NotAValidFile => e
+    next
+  end
+  p.parse!
+  data_sets.push p
+end
 
 # gather up heterogenous data sets
-
-user_files.each do |file|
-  p = DataParser.new file
-  p.parse!
-  data_sets.push p
-end
-
-transaction_files.each do |file|
-  p = TransactionParser.new file
-  p.parse!
-  data_sets.push p
-end
 
 # create databases from datasets
 
 data_bases = {}
-
+binding.pry
 data_sets.each do |object|
   object.instance_variables.each do |i_var|
     data = object.instance_variable_get(i_var)
