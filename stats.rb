@@ -12,6 +12,9 @@ require "./user_database"
 require "./item_database"
 require "./transaction_database"
 
+def is_a_valid_file? file
+  File.readable?(file)
+end
 
 def object_to_prototype object
   return_h = {}
@@ -19,7 +22,6 @@ def object_to_prototype object
   return_h
   binding.pry
 end
-
 
 def determine_parse_method abs_filename
   h = JSON.parse File.read abs_filename
@@ -38,30 +40,19 @@ def determine_parse_method abs_filename
   rescue NoMethodError => e
   end
 
-  raise NotAValidFile
+  raise ArgumentError, "Filename is not valid."
 
 end
 
-user_files = [
-  "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/kittens.json",
-"/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/hobbitses.json"
-]
-
-transaction_files = [
-  "/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/monday.json",
-"/Users/gazelle/Desktop/Iron_Yard_Ruby/ruby_stuff/shoppe/tests/tuesday.json"
-]
-
-#exit
-
 data_sets = []
-parsers = []
 
-
-(transaction_files + user_files).each do |file|
+ARGV.each do |file|
   begin
+    unless is_a_valid_file? file
+      raise ArgumentError, "Filename is not valid."
+    end
     p = determine_parse_method(file).new file
-  rescue NotAValidFile => e
+  rescue ArgumentError, "Filename is not valid" => e
     next
   end
   p.parse!
@@ -73,7 +64,6 @@ end
 # create databases from datasets
 
 data_bases = {}
-binding.pry
 data_sets.each do |object|
   object.instance_variables.each do |i_var|
     data = object.instance_variable_get(i_var)
@@ -91,18 +81,10 @@ data_sets.each do |object|
         data_bases[i_var] = DataBase.new data
       end
     end
-
-    # if data_bases.keys.include? i_var
-    #   # add to db
-    #   data_bases[i_var].add_data data
-    # else
-    #   # create db
-    #     data_bases[i_var] = DataBase.new data
-      #########data_bases[i_var] = DataBase.new i_var.to_s.gsub(/@/,""), object.instance_variable_get(i_var)
-    # end
   end
 end
 
+data_sets.clear
 mgr = DataBaseMgr.new data_bases
 db = mgr.current_db
 
@@ -112,7 +94,6 @@ binding.pry
 
 db = select_db data_bases[:@transaction]
 table = data_bases[:@transaction].user_order_by_amount
-
 
 binding.pry
 user_order_amount_descending = Hash.new(0)
@@ -140,4 +121,20 @@ answer = user_order_amount_descending.map { |key, value| {"user_id"=>key, "total
 inter = user_order_amount_descending.sort_by { |key, value| value }.reverse.map { |x,y| {x=>y}}
 highest = user_order_amount_descending.sort_by { |id, qty| qty }.reverse.first
 
+mgr.current_db.data.select { |o| o.id == 52 }[0].name
+mgr.current_db.data.max_by { |h| h["quantity"] }
+mgr.current_db.data.select { |o| o["item_id"] == 5 }.map { |o| o["quantity"] }.reduce :+
+  #json_parsed_file.pop json_parsed_file.count - 1
 binding.pry
+mgr.current_db.data.select { |o| o.category == "Household Goods" }.map { |o| o.id }
+
+mgr.current_db.data.map { |h| x.select { |r| r.id == h["item_id"] } }
+
+mgr.current_db.data.map { |h| [h["quantity"], x.select { |r| r.id == h["item_id"]}.map {|i| i.price }] }.map {|y| y.flatten}.map {|j| j.reduce :* }.reduce :+
+
+#   table = mgr.current_db.select ...
+#        table2 = mgr.current_db.select ...
+
+# join table, "id", table2, "item_id",
+# extend table "id" "qty"
+# sum table "id"
