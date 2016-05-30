@@ -2,9 +2,7 @@ require "pry"
 
 require "./item"
 require "./user"
-require "./data_table"
-require "./user_table"
-require "./item_table"
+require "./transaction"
 
 require "./data_parser"
 require "./transaction_id"
@@ -61,8 +59,9 @@ ARGV.each do |file|
   end
   p.parse!
   data_sets.push p.datafy
-  binding.pry
 end
+
+binding.pry
 
 # gather up heterogenous data sets
 

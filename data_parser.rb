@@ -86,16 +86,19 @@ class DataParser
 
   end
 
+  def fix_name symbol_from_iv
+    symbol_from_iv.to_s.gsub(/^@/,"")
+  end
+
   def datafy
     tables = []
 
     instance_variables.each do |i|
       case i
       when :@users
-        tables.push (UserTable.new(i, self.instance_variable_get(i)))
-        binding.pry
+        tables.push (UserTable.new(fix_name(i), self.instance_variable_get(i)))
       when :@items
-        tables.push (ItemTable.new(i, self.instance_variable_get(i)))
+        tables.push (ItemTable.new(fix_name(i), self.instance_variable_get(i)))
       end
     end
     return tables
@@ -105,6 +108,7 @@ end
 
 class DataTable
   def initialize name, data_parser_data
+    @name = name
     @data = []
     data_parser_data.each do |o|
       h = {}
