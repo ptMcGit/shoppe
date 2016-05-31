@@ -67,27 +67,27 @@ end
 
 shoppe = DataBase.new data_sets
 data_sets.clear
-binding.pry
 
-#mgr = DataBaseMgr.new data_bases
+
+users = shoppe.tables["users"]
+items = shoppe.tables["items"]
+transaction = shoppe.tables["transaction"]
 
 # First question
 
-## user table
-mgr.select_db :@users
-user_table = Hash[mgr.current_db.data.map { |h| [h.id, h.name] }]
+u_and_t = shoppe.add_table "u_and_t", shoppe.join_tables(users, "id", transaction, "user_id")
 
-mgr.select_db :@transaction
-db = mgr.current_db.data
-u = Hash.new(0)
-db.each do |h|
-  u[h["user_id"]] += h["quantity"]
-end
+volume_buyers = shoppe.add_table "volume_buyers", shoppe.sum_by(u_and_t, "name", "quantity")
 
-answer = Hash[u.map { |k,v| [user_table[k], v] }].max_by { |n,q| q }
-puts "1. The user that made the most orders was #{answer[0]} with #{answer[1]} orders."
+highest_volume = shoppe.max_record volume_buyers, "total"
 
+puts "1. The user that made the most orders was #{highest_volume["name"]} with #{highest_volume["total"]} orders."
+
+
+binding.pry
 # Second question
+
+
 
 mgr.select_db :@items
 db = mgr.current_db.data
