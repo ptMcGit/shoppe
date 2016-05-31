@@ -68,7 +68,6 @@ end
 shoppe = DataBase.new data_sets
 data_sets.clear
 
-
 users = shoppe.tables["users"]
 items = shoppe.tables["items"]
 transaction = shoppe.tables["transaction"]
@@ -83,54 +82,38 @@ highest_volume = shoppe.max_record volume_buyers, "total"
 
 puts "1. The user that made the most orders was #{highest_volume["name"]} with #{highest_volume["total"]} orders."
 
-
-binding.pry
 # Second question
 
+ergo_lamp_record = shoppe.unique_record items, "name", "Ergonomic Rubber Lamp"
+ergo_lamp_id = ergo_lamp_record["id"]
 
+ergo_lamp_purchases = shoppe.filter_by_value(transaction, "item_id", ergo_lamp_id)
 
-mgr.select_db :@items
-db = mgr.current_db.data
-item_id = db.select { |o| o.name == "Ergonomic Rubber Lamp" }[0].id
+ergo_lamp_total = shoppe.sum_column ergo_lamp_purchases, "quantity"
 
-h = Hash.new(0)
-mgr.select_db :@transaction
-db = mgr.current_db.data
-answer = db.select { |o| o["item_id"] == item_id }.map { |o| o["quantity"] }.reduce :+
-
-
-puts "2. We sold #{answer} Ergonomic Rubber Lamps."
+puts "2. We sold #{ergo_lamp_total} Ergonomic Rubber Lamps."
 
 # Question 3
 
-mgr.select_db :@items
-db = mgr.current_db.data
+tools_cat = shoppe.filter_by_value items, "category", "Tools"
+tools_cat_ids = shoppe.get_values tools_cat, "id"
+tool_purchases = shoppe.filter_by_value transaction, "item_id", tools_cat_ids
+tool_totals = shoppe.sum_column tool_purchases, "quantity"
 
-tools_cat = db.select { |o| o.category == "Tools" }.map { |o| o.id }
-tc_cat = db.select { |o| o.category == "Tools & Computers" }.map { |o| o.id }
 
-h = Hash.new(0)
-mgr.select_db :@transaction
-db = mgr.current_db.data
-
-answer = db.select { |o| tools_cat.include? o["item_id"] }.map {|o| o["quantity"] }.reduce :+
-
-answer2 = db.select { |o| tc_cat.include? o["item_id"] }.map {|o| o["quantity"] }.reduce :+
-
-puts "3. We sold #{answer} items from the Tools category and #{answer2} items from the Tools & Computers category"
+puts "3. We sold #{tool_totals} items from the Tools category."
 
 # Question 4
 
-mgr.select_db :@transaction
-db = mgr.current_db.data
+items_with_price = shoppe.join_tables items, "id", transaction, "item_id"
+items_extended = shoppe.extend_table items_with_price, "quantity", "price"
+items_summed = shoppe.sum_column items_extended, "ext"
 
-mgr.select_db :@items
-db2 = mgr.current_db.data
-
-answer = db.map { |h| [h["quantity"], db2.select { |r| r.id == h["item_id"]}.map {|i| i.price }] }.map {|y| y.flatten}.map {|j| j.reduce :* }.reduce :+
-answer_formatted = "$" + answer.round(2).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
+answer_formatted = "$" + items_summed.round(2).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
 
 puts "4. Our total revenue was #{answer_formatted}."
+
+binding.pry
 
 mgr.select_db :@transaction
 db = mgr.current_db.data

@@ -28,7 +28,7 @@ class DataBase
   end
 
   def sum_by table, id_field, qty_field
-    h = table.map { |h| Hash["name",h["name"],"total", 0] }.uniq
+    h = table.map { |h| Hash[id_field,h[id_field],"total", 0] }.uniq
 
     table.each do |hash|
       h.select { |e| e[id_field] == hash[id_field]}[0]["total"] += hash[qty_field]
@@ -36,9 +36,34 @@ class DataBase
     return h
   end
 
+  def sum_column table, field
+    table.map { |h| h[field] }.reduce :+
+  end
+
+  def get_values table, field
+    table.map { |h| h[field] }
+  end
+
+  def extend_table table, field1, field2
+    table.each do |h|
+      h["ext"] = h[field1] * h[field2]
+    end
+    return table
+  end
+
   def max_record table, field
     table.max_by { |h| h[field] }
   end
+
+  def unique_record table, unique_field, value
+    return table.select { |h| h[unique_field] == value }.first
+  end
+
+  def filter_by_value table, field, *values
+#    binding.pry
+    return table.select { |h| values.flatten.include? h[field] }
+  end
+
 
   def ensure_array data
     case data
