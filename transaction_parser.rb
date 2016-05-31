@@ -36,11 +36,14 @@ class TransactionParser
   end
 
   def datafy
-    return TransactionTable.new(fix_name(i), self.transaction)
+    return TransactionTable.new("transaction", self.transaction)
   end
 end
 
 class TransactionTable
+
+  attr_reader :name, :data
+
   def initialize name, transaction_parser_data
     @name = name
     @data = []

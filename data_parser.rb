@@ -107,6 +107,8 @@ class DataParser
 end
 
 class DataTable
+  attr_reader :name, :data
+
   def initialize name, data_parser_data
     @name = name
     @data = []
