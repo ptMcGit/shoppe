@@ -20,6 +20,7 @@ class DataBase
   def join_tables table1, field1, table2, field2
     # REVERSE THESE => join table2 table1
     table = []
+
     table2.each do |h2|
       table.push [h2, table1.select { |h1| h1[field1] == h2[field2] }[0]].reduce(:merge)
 
@@ -60,7 +61,6 @@ class DataBase
   end
 
   def filter_by_value table, field, *values
-#    binding.pry
     return table.select { |h| values.flatten.include? h[field] }
   end
 
@@ -88,12 +88,8 @@ class DataBase
 #    binding.pry
 #    0.upto (@users.count - 1) do |index|
 #      @users.delete_if { |user2| (!user2.equal? @users[index]) && (user2.address == @users[index].address) && (user2.id == @users[index].id) && (user2.name == @users[index].name) }
-      #binding.pry
 
-
- #     binding.pry
-      #binding.pry
-      #@users.delete duplicate_entries
+  #@users.delete duplicate_entries
   #  end
    # binding.pry
 #  end

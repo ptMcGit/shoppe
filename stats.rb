@@ -7,10 +7,6 @@ require "./transaction"
 require "./data_parser"
 require "./transaction_parser"
 require "./database"
-require "./database_mgr"
-require "./user_database"
-require "./item_database"
-require "./transaction_database"
 
 def is_a_valid_file? file
   File.readable?(file)
