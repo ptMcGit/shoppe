@@ -1,7 +1,15 @@
 class DataBase
-  attr_reader :data
-  def initialize data
-    @data = ensure_array(data)
+  attr_reader :tables
+  def initialize *tables
+    @tables = {}
+    tables.flatten.each do |table|
+      if @tables.keys.include? table.name
+        @tables[table.name] += table.data
+      else
+        @tables[table.name] = table.data
+      end
+    end
+    @tables
   end
 
   def ensure_array data

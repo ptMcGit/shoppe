@@ -46,6 +46,8 @@ def determine_parse_method abs_filename
 
 end
 
+# Parse data, and create tables
+
 data_sets = []
 
 ARGV.each do |file|
@@ -61,43 +63,13 @@ ARGV.each do |file|
   data_sets.push p.datafy
 end
 
-binding.pry
-
-# gather up heterogenous data sets
-
 # create databases from datasets
 
-
-
-data_bases = {}
-
-
-exit
-
-
-
-# data_sets.each do |object|
-#   object.instance_variables.each do |i_var|
-#     data = object.instance_variable_get(i_var)
-#     if data_bases.keys.include? i_var
-#       data_bases[i_var].add_data data
-#     else
-#       case i_var
-#       when :@users
-#         data_bases[i_var] = UserDatabase.new data
-#       when :@items
-#         data_bases[i_var] = ItemDatabase.new data
-#       when :@transaction
-#         data_bases[i_var] = TransactionDatabase.new data
-#       else
-#         data_bases[i_var] = DataBase.new data
-#       end
-#     end
-#   end
-# end
-
+shoppe = DataBase.new data_sets
 data_sets.clear
-mgr = DataBaseMgr.new data_bases
+binding.pry
+
+#mgr = DataBaseMgr.new data_bases
 
 # First question
 
