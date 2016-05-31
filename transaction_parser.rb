@@ -3,7 +3,6 @@ def is_a_transaction_file? json_parsed_file
   return t.hash == TransactionParser::TransactionFilePattern.hash
 end
 
-require "./transaction_id"
 class TransactionParser
 
   attr_reader :transaction, :TransactionParserPattern
@@ -16,19 +15,17 @@ class TransactionParser
   ]
 
   def initialize abs_filename
-    @contents = JSON.parse File.read abs_filename
     @path = abs_filename
     @transaction = []
   end
 
   def parse!
-    @contents.each do |transaction|
+    raw = JSON.parse File.read @path
+    @transaction = []
+
+    raw.each do |transaction|
       @transaction.push Transaction.new transaction
     end
-
-    # remove original data from the object
-
-    remove_instance_variable(:@contents)
   end
 
   def fix_name symbol_from_iv

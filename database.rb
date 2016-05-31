@@ -29,11 +29,12 @@ class DataBase
   end
 
   def sum_by table, id_field, qty_field
-    h = table.map { |h| Hash[id_field,h[id_field],"total", 0] }.uniq
-
+    h = Hash.new(0)
     table.each do |hash|
-      h.select { |e| e[id_field] == hash[id_field]}[0]["total"] += hash[qty_field]
+      h[hash[id_field]] += hash[qty_field]
     end
+
+    h = h.map { |k,v| Hash["name"=>k,"total"=>v]}
     return h
   end
 

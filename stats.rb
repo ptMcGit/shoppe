@@ -115,9 +115,9 @@ answer_formatted = "$" + ('%.2f' % single_cat["total"].round(2)).to_s.reverse.gs
 print "5a. The highest grossing single category was #{single_cat["category"]} at #{answer_formatted}.\n"
 
 g = Hash.new(0)
-
+binding.pry
 items_cats_extended.each do |k|
-  cats = k["category"].gsub(/&/,"").split(" ")
+  cats = k["name"].gsub(/&/,"").split(" ")
   cats.each do |cat|
     g[cat] += k["total"]
   end

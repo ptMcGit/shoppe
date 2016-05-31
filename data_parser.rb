@@ -44,14 +44,17 @@ class DataParser
     ]
 
   def initialize abs_filename
-    @contents = JSON.parse File.read abs_filename
+#    @contents = JSON.parse File.read abs_filename
     @path = abs_filename
     @users = []
     @items = []
   end
 
   def parse!
-    @contents["users"].each do |user|
+    raw = JSON.parse File.read @path
+    @users = []
+
+    raw["users"].each do |user|
       h = {}
       user.each do |key, value|
         h[key] = value
@@ -64,7 +67,9 @@ class DataParser
       )
     end
 
-    @contents["items"].each do |item|
+    @items = []
+
+    raw["items"].each do |item|
       h = {}
       item.each do |key, value|
         h[key] = value
@@ -81,8 +86,6 @@ class DataParser
 
 
     # we don't want to carry the original contents moving forward
-
-    remove_instance_variable(:@contents)
 
   end
 
