@@ -5,14 +5,12 @@ require "./user"
 require "./transaction"
 
 require "./data_parser"
-require "./transaction_id"
 require "./transaction_parser"
 require "./database"
 require "./database_mgr"
 require "./user_database"
 require "./item_database"
 require "./transaction_database"
-
 
 def is_a_valid_file? file
   File.readable?(file)
@@ -22,7 +20,6 @@ def object_to_prototype object
   return_h = {}
   object.instance_variables.each {|attr| return_h[attr.to_s.delete("@")] = object.instance_variables_get(attr).class }
   return_h
-  binding.pry
 end
 
 def determine_parse_method abs_filename
@@ -113,34 +110,20 @@ answer_formatted = "$" + items_summed.round(2).to_s.reverse.gsub(/\d\d\d/, '\&,'
 
 puts "4. Our total revenue was #{answer_formatted}."
 
-binding.pry
+items_cats_extended = shoppe.sum_by(items_extended, "category", "ext")
 
-mgr.select_db :@transaction
-db = mgr.current_db.data
+single_cat = items_cats_extended.max_by { |k,v| v}
 
-mgr.select_db :@items
-db2 = mgr.current_db.data
+answer_formatted = "$" + ('%.2f' % single_cat["total"].round(2)).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
 
-qty_price_cat = db.map { |h| [h["quantity"], db2.select { |r| r.id == h["item_id"]}.map {|i| [i.price, i.category]}] }.map { |x| x.flatten }
-
-h = Hash.new(0)
-
-qty_price_cat.each do |x,y,z|
-  h[z] += x * y
-end
-
-single_cat = h.max_by { |k,v| v}
-
-answer_formatted = "$" + ('%.2f' % single_cat[1].round(2)).to_s.reverse.gsub(/\d\d\d/, '\&,').reverse
-
-print "5a. The highest grossing single category was #{single_cat[0]} at #{answer_formatted}.\n"
+print "5a. The highest grossing single category was #{single_cat["category"]} at #{answer_formatted}.\n"
 
 g = Hash.new(0)
 
-h.each do |k,v|
-  cats = k.gsub(/&/,"").split(" ")
+items_cats_extended.each do |k|
+  cats = k["category"].gsub(/&/,"").split(" ")
   cats.each do |cat|
-    g[cat] += v
+    g[cat] += k["total"]
   end
 end
 

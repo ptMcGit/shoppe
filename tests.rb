@@ -7,6 +7,7 @@ Minitest::Reporters.use! Minitest::Reporters::ProgressReporter.new
 
 require "./item"
 require "./user"
+require "./transaction"
 require "./data_parser"
 require "./transaction_parser"
 
